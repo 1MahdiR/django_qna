@@ -6,7 +6,14 @@
 	<body>
 		<div class="header">
 			<h2><a href="{% url 'main:index' %}">Q&A</a></h2>
+			{% if request.user.is_authenticated %}
+			<p>Hello {{ request.user.first_name }}</p>
 			<h3><a href="{% url 'main:submit' %}">Submit question</a></h3>
+			<h4><a href="{% url 'main:logout' %}">Logout</a></h4>
+			{% else %}
+			<h3><a href="{% url 'main:login' %}">Login</a></h3>
+			<h3><a href="{% url 'main:register' %}">Register</a></h3>
+			{% endif %}
 		</div>
 		<hr>
 		<div id="content">

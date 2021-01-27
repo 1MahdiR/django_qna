@@ -5,7 +5,7 @@
 <div class="question_body">
 	<div class="question_body_title">
 		<h2>{{ question.question_title }}</h2>
-		<p class="question_username">By <strong>{{ question.question_username }}</strong></p>
+		<p class="question_username">By <strong>{{ question.question_user.first_name }}</strong></p>
 	</div>
 	<div class="question_body_text">
 		<p>
@@ -17,6 +17,7 @@
 	</div>
 	<div class="likes">
 		<h3>Likes: {{ question.question_likes }}</h3>
+		{% if request.user.is_authenticated %}
 		<div class="like_form">
 			<form method="post">
 				{% csrf_token %}
@@ -24,11 +25,13 @@
 				<p><input type="submit" value="Like" /></p>
 			</form>
 		</div>
+		{% endif %}
 	</div>
 </div>
 <hr>
 <h3>Answers:</h3>
 <br>
+{% if request.user.is_authenticated %}
 <div class="answer_form">
 	<form method="post">
 		{% csrf_token %}
@@ -37,15 +40,17 @@
 	</form>
 </div>
 <hr>
+{% endif %}
 <div class="answer_list_con">
 	<ol class="answer_list">
 		{% for item in answer_list %}
 		<li class="answer">
-			<p class="answer_username">By <strong>{{ item.answer_username }}</p>
+			<p class="answer_username">By <strong>{{ item.answer_user.first_name }}</p>
 			<p class="answer_body">{{ item.answer_text }}</p>
 			<br>
 			<div class="likes">
 				<h3>Likes: {{ item.answer_likes }}</h3>
+				{% if request.user.is_authenticated %}
 				<div class="like_form">
 					<form method="post">
 						{% csrf_token %}
@@ -53,6 +58,7 @@
 						<p><input type="submit" value="Like" /></p>
 					</form>
 				</div>
+				{% endif %}
 			</div>
 			
 			<br><hr>
