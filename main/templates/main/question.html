@@ -17,12 +17,18 @@
 	</div>
 	<div class="likes">
 		<h3>Likes: {{ question.question_likes }}</h3>
+		<h3>Disikes: {{ question.question_dislikes }}</h3>
 		{% if request.user.is_authenticated %}
 		<div class="like_form">
 			<form method="post">
 				{% csrf_token %}
-				<input type="hidden" name="question" value="{{ question.id }}" />
+				<input type="hidden" name="question_like" value="{{ question.id }}" />
 				<p><input type="submit" value="Like" /></p>
+			</form>
+			<form method="post">
+				{% csrf_token %}
+				<input type="hidden" name="question_dislike" value="{{ question.id }}" />
+				<p><input type="submit" value="Dislike" /></p>
 			</form>
 		</div>
 		{% endif %}
@@ -50,12 +56,18 @@
 			<br>
 			<div class="likes">
 				<h3>Likes: {{ item.answer_likes }}</h3>
+				<h3>Disikes: {{ item.answer_dislikes }}</h3>
 				{% if request.user.is_authenticated %}
 				<div class="like_form">
 					<form method="post">
 						{% csrf_token %}
-						<input type="hidden" name="answer" value="{{ item.id }}" />
+						<input type="hidden" name="answer_like" value="{{ item.id }}" />
 						<p><input type="submit" value="Like" /></p>
+					</form>
+					<form method="post">
+						{% csrf_token %}
+						<input type="hidden" name="answer_dislike" value="{{ item.id }}" />
+						<p><input type="submit" value="Dislike" /></p>
 					</form>
 				</div>
 				{% endif %}

@@ -21,15 +21,27 @@ def question(req, q_id):
     if req.method == "POST":
         print(req.POST)
         form = req.POST
-        if form.get('answer'):
-            temp = form['answer']
+        if form.get('answer_like'):
+            temp = form['answer_like']
             answer = get_object_or_404(Answer, id=int(temp))
             answer.answer_likes += 1
             answer.save()
             form = AnswerForm(data=req.POST)
+        
+        elif form.get('answer_dislike'):
+            temp = form['answer_dislike']
+            answer = get_object_or_404(Answer, id=int(temp))
+            answer.answer_dislikes += 1
+            answer.save()
+            form = AnswerForm(data=req.POST)
 
-        elif form.get('question'):
+        elif form.get('question_like'):
             question.question_likes += 1
+            question.save()
+            form = AnswerForm(data=req.POST)
+        
+        elif form.get('question_dislike'):
+            question.question_dislikes += 1
             question.save()
             form = AnswerForm(data=req.POST)
 

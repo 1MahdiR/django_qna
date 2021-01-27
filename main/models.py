@@ -12,6 +12,7 @@ class Question(models.Model):
     					blank=True,null=True)
     question_date = models.DateTimeField(default=timezone.now)
     question_likes = models.IntegerField(default=0)
+    question_dislikes = models.IntegerField(default=0)
     question_text = models.TextField()
 
 class Answer(models.Model):
@@ -21,6 +22,7 @@ class Answer(models.Model):
     					related_name="user_answer",
     					blank=True,null=True)
     answer_likes = models.IntegerField(default=0)
+    answer_dislikes = models.IntegerField(default=0)
     answer_text = models.TextField()
     answer_question = models.ForeignKey(Question,
                             on_delete=models.CASCADE,
