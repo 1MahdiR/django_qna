@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}Q&A{% endblock %}
+
+{% block content %}
+<div class="question_list_con">
+	<ul class="question_list">
+	{% for item in question_list %}
+	<li><h3><a href="{% url 'main:question' item.id %}">{{ item.question_title }}</a></h3></li>
+		<h3>By {{ item.question_username }}</h3>
+		<h4>In {{ item.question_date }}</h4>
+		<h3>Likes: {{ item.question_likes }}</h3>
+		<br>
+		<hr>
+	{% endfor %}
+	</ul>
+</div>
+<br>
+{% endblock %}
+

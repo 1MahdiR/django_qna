@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>{% block title %}{% endblock %}</title>
+	</head>
+	<body>
+		<div class="header">
+			<h2><a href="{% url 'main:index' %}">Q&A</a></h2>
+			<h3><a href="{% url 'main:submit' %}">Submit question</a></h3>
+		</div>
+		<hr>
+		<div id="content">
+			{% block content %}
+			{% endblock %}
+		</div>
+	</body>
+</html>
+
