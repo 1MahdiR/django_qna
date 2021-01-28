@@ -19,7 +19,6 @@ def question(req, q_id):
     question = get_object_or_404(Question, id=q_id)
 
     if req.method == "POST" and req.user.is_authenticated:
-        print(req.POST)
         form = req.POST
         if form.get('answer_like'):
             temp = form['answer_like']
