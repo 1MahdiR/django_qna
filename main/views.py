@@ -18,38 +18,50 @@ def question(req, q_id):
 
     question = get_object_or_404(Question, id=q_id)
 
-    if req.method == "POST":
+    if req.method == "POST" and req.user.is_authenticated:
         print(req.POST)
         form = req.POST
         if form.get('answer_like'):
             temp = form['answer_like']
             answer = get_object_or_404(Answer, id=int(temp))
-            answer.answer_likes += 1
+            if req.user in answer.answer_likes.all():
+                answer.answer_likes.remove(req.user)
+            else:
+                answer.answer_likes.add(req.user)
             answer.save()
             form = AnswerForm(data=req.POST)
-        
+
         elif form.get('answer_dislike'):
             temp = form['answer_dislike']
             answer = get_object_or_404(Answer, id=int(temp))
-            answer.answer_dislikes += 1
+            if req.user in answer.answer_dislikes.all():
+                answer.answer_dislikes.remove(req.user)
+            else:
+                answer.answer_dislikes.add(req.user)
             answer.save()
             form = AnswerForm(data=req.POST)
 
         elif form.get('question_like'):
-            question.question_likes += 1
+            if req.user in question.question_likes.all():
+                question.question_likes.remove(req.user)
+            else:
+                question.question_likes.add(req.user)
             question.save()
             form = AnswerForm(data=req.POST)
-        
+
         elif form.get('question_dislike'):
-            question.question_dislikes += 1
+            if req.user in question.question_dislikes.all():
+                question.question_dislikes.remove(req.user)
+            else:
+                question.question_dislikes.add(req.user)
             question.save()
             form = AnswerForm(data=req.POST)
-            
+
         elif form.get('question_delete'):
             if question.question_user == req.user:
             	question.delete()
             	return HttpResponseRedirect(reverse('main:index'))
-            
+
         elif form.get('answer_delete'):
             temp = form['answer_delete']
             answer = get_object_or_404(Answer, id=int(temp))
@@ -75,7 +87,7 @@ def question(req, q_id):
 
 @login_required
 def question_submit(req):
-    
+
     if req.method == "POST":
         form = QuestionForm(req.POST)
         if form.is_valid():
@@ -102,7 +114,7 @@ def register(req):
 	return render(req, 'main/regist.html', { 'form':form })
 
 def login_view(req):
-	
+
 	if req.method == "POST":
 		form = LoginForm(req.POST)
 		if form.is_valid():
@@ -118,10 +130,9 @@ def login_view(req):
 				return HttpResponse("Invalid login!")
 	else:
 		form = LoginForm()
-		
+
 	return render(req, 'main/login.html', { 'form':form })
-	
+
 def logout_view(req):
 	logout(req)
 	return HttpResponseRedirect(reverse('main:index'))
-	

@@ -16,8 +16,8 @@
 		<h4>{{ question.question_date }}</h4>
 	</div>
 	<div class="likes">
-		<h3>Likes: {{ question.question_likes }}</h3>
-		<h3>Disikes: {{ question.question_dislikes }}</h3>
+		<h3>Likes: {{ question.question_likes_count }}</h3>
+		<h3>Disikes: {{ question.question_dislikes_count }}</h3>
 		{% if request.user.is_authenticated %}
 		<div class="like_form">
 			<form method="post">
@@ -64,8 +64,8 @@
 			<p class="answer_body">{{ item.answer_text }}</p>
 			<br>
 			<div class="likes">
-				<h3>Likes: {{ item.answer_likes }}</h3>
-				<h3>Disikes: {{ item.answer_dislikes }}</h3>
+				<h3>Likes: {{ item.answer_likes_count }}</h3>
+				<h3>Disikes: {{ item.answer_dislikes_count }}</h3>
 				{% if request.user.is_authenticated %}
 				<div class="like_form">
 					<form method="post">
@@ -90,11 +90,10 @@
 				{% endifequal %}
 				{% endif %}
 			</div>
-			
+
 			<br><hr>
 		</li>
 		{% endfor %}
 	</ol>
 </div>
 {% endblock %}
-
