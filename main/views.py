@@ -44,6 +44,20 @@ def question(req, q_id):
             question.question_dislikes += 1
             question.save()
             form = AnswerForm(data=req.POST)
+            
+        elif form.get('question_delete'):
+            if question.question_user == req.user:
+            	question.delete()
+            	return HttpResponseRedirect(reverse('main:index'))
+            
+        elif form.get('answer_delete'):
+            temp = form['answer_delete']
+            answer = get_object_or_404(Answer, id=int(temp))
+            print(answer.answer_user == req.user)
+            print(form)
+            if answer.answer_user == req.user:
+            	answer.delete()
+            	return HttpResponseRedirect(reverse('main:question', kwargs={'q_id':question.id}))
 
         else:
             form = AnswerForm(data=req.POST)

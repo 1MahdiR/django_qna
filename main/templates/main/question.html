@@ -31,6 +31,15 @@
 				<p><input type="submit" value="Dislike" /></p>
 			</form>
 		</div>
+		{% ifequal request.user.username question.question_user.username %}
+		<div class="delete_question">
+			<form method="post">
+				{% csrf_token %}
+				<input type="hidden" name="question_delete" value="{{ question.id }}" />
+				<p><input type="submit" value="Delete this question" /></p>
+			</form>
+		</div>
+		{% endifequal %}
 		{% endif %}
 	</div>
 </div>
@@ -70,6 +79,15 @@
 						<p><input type="submit" value="Dislike" /></p>
 					</form>
 				</div>
+				{% ifequal request.user.username item.answer_user.username %}
+				<div class="delete_answer">
+					<form method="post">
+						{% csrf_token %}
+						<input type="hidden" name="answer_delete" value="{{ item.id }}" />
+						<p><input type="submit" value="Delete this answer" /></p>
+					</form>
+				</div>
+				{% endifequal %}
 				{% endif %}
 			</div>
 			
